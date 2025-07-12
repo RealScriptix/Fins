@@ -30,14 +30,14 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #000;
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
             color: #fff;
             overflow: hidden;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         body.light-mode {
-            background: #fff;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             color: #000;
         }
 
@@ -56,18 +56,23 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
             padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: bold;
-            color: #ff6b6b;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
         }
 
         .header-controls {
@@ -129,42 +134,62 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-            padding: 30px 20px 20px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+            padding: 40px 20px 25px;
             pointer-events: none;
+            backdrop-filter: blur(5px);
         }
 
         .video-info {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .video-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 5px;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
             line-height: 1.3;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .video-creator {
-            font-size: 14px;
-            color: #ccc;
+            font-size: 15px;
+            color: #e0e0e0;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            font-weight: 500;
         }
 
         .creator-avatar {
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
-            background: #ff6b6b;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         .video-stats {
             display: flex;
-            gap: 20px;
-            font-size: 12px;
-            color: #999;
+            gap: 25px;
+            font-size: 13px;
+            color: #bbb;
+            font-weight: 500;
+        }
+
+        .video-stats span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 6px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
         }
 
         /* Side Controls */
@@ -179,30 +204,38 @@
         }
 
         .control-btn {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             border: none;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 56px;
+            height: 56px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 20px;
+            font-size: 22px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .control-btn:hover {
             background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
+            transform: scale(1.15);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
 
         .control-btn.liked {
-            background: #ff6b6b;
+            background: linear-gradient(135deg, #ff6b6b, #ff5252);
+            color: white;
+            box-shadow: 0 4px 20px rgba(255, 107, 107, 0.4);
         }
 
         .control-btn.subscribed {
-            background: #4ecdc4;
+            background: linear-gradient(135deg, #4ecdc4, #45b7aa);
+            color: white;
+            box-shadow: 0 4px 20px rgba(78, 205, 196, 0.4);
         }
 
         /* Bottom Navigation */
@@ -692,28 +725,72 @@
             to { transform: translateX(0); }
         }
 
+        @keyframes swipeActionFade {
+            0% { 
+                opacity: 0; 
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            20% { 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+            100% { 
+                opacity: 0; 
+                transform: translate(-50%, -50%) scale(0.9);
+            }
+        }
+
         .video-card {
-            animation: fadeIn 0.5s ease;
+            animation: fadeIn 0.6s ease;
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        .video-card.loaded {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
 
         /* Loading States */
         .loading {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
             font-size: 18px;
             color: #ff6b6b;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
         }
 
         .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #333;
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
             border-top: 4px solid #ff6b6b;
+            border-right: 4px solid #4ecdc4;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin-right: 15px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.3));
+        }
+
+        .video-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .video-loading .spinner {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 15px;
         }
 
         @keyframes spin {
@@ -728,13 +805,14 @@
             left: 0;
             right: 0;
             z-index: 999;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+            padding: 15px 20px;
             display: flex;
-            gap: 10px;
+            gap: 12px;
             overflow-x: auto;
             scrollbar-width: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .topic-filters::-webkit-scrollbar {
@@ -742,19 +820,31 @@
         }
 
         .topic-filter {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             border: none;
             color: #fff;
-            padding: 8px 16px;
-            border-radius: 20px;
+            padding: 10px 18px;
+            border-radius: 25px;
             white-space: nowrap;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .topic-filter:hover,
+        .topic-filter:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
         .topic-filter.active {
-            background: #ff6b6b;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+            transform: translateY(-2px);
         }
     </style>
 </head>
@@ -1014,7 +1104,7 @@
             videos: []
         };
 
-        // Mock video data with hierarchical topics
+        // Mock video data with working video URLs
         const mockVideos = [
             {
                 id: 1,
@@ -1030,7 +1120,8 @@
                 bio: "Professional gamer and content creator",
                 followers: 25000,
                 videoCount: 150,
-                url: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4"
+                url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+                thumbnail: "https://i.ytimg.com/vi/YE7VzlLtp-4/maxresdefault.jpg"
             },
             {
                 id: 2,
@@ -1046,7 +1137,8 @@
                 bio: "Best sports highlights daily",
                 followers: 18000,
                 videoCount: 89,
-                url: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4"
+                url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+                thumbnail: "https://i.ytimg.com/vi/TcMBFSGVi1c/maxresdefault.jpg"
             },
             {
                 id: 3,
@@ -1062,7 +1154,8 @@
                 bio: "Making cooking easy and fun",
                 followers: 32000,
                 videoCount: 203,
-                url: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4"
+                url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+                thumbnail: "https://i.ytimg.com/vi/YQHsXMglC9A/maxresdefault.jpg"
             },
             {
                 id: 4,
@@ -1078,7 +1171,8 @@
                 bio: "Electronic music producer",
                 followers: 45000,
                 videoCount: 78,
-                url: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4"
+                url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+                thumbnail: "https://i.ytimg.com/vi/hTWKbfoikeg/maxresdefault.jpg"
             },
             {
                 id: 5,
@@ -1094,7 +1188,59 @@
                 bio: "Making people laugh daily",
                 followers: 28000,
                 videoCount: 156,
-                url: "https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4"
+                url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+                thumbnail: "https://i.ytimg.com/vi/aqz-KE-bpKQ/maxresdefault.jpg"
+            },
+            {
+                id: 6,
+                title: "Amazing Tech Review",
+                creator: "TechGuru",
+                avatar: "📱",
+                views: 31250,
+                likes: 2890,
+                duration: "1:05",
+                category: "tech",
+                subcategory: "reviews",
+                tags: ["tech", "review", "gadget"],
+                bio: "Latest tech reviews and unboxings",
+                followers: 67000,
+                videoCount: 234,
+                url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4",
+                thumbnail: "https://i.ytimg.com/vi/cNky_0lLKQE/maxresdefault.jpg"
+            },
+            {
+                id: 7,
+                title: "Fitness Motivation",
+                creator: "FitLife",
+                avatar: "💪",
+                views: 19876,
+                likes: 1654,
+                duration: "0:48",
+                category: "fitness",
+                subcategory: "workouts",
+                tags: ["fitness", "workout", "motivation"],
+                bio: "Your daily dose of fitness inspiration",
+                followers: 45000,
+                videoCount: 189,
+                url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",
+                thumbnail: "https://i.ytimg.com/vi/xjS6SftYQaQ/maxresdefault.jpg"
+            },
+            {
+                id: 8,
+                title: "Travel Vlog Paradise",
+                creator: "WorldExplorer",
+                avatar: "🌍",
+                views: 27400,
+                likes: 2100,
+                duration: "1:12",
+                category: "travel",
+                subcategory: "destinations",
+                tags: ["travel", "vlog", "paradise"],
+                bio: "Exploring the world one destination at a time",
+                followers: 52000,
+                videoCount: 156,
+                url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",
+                thumbnail: "https://i.ytimg.com/vi/yQXYNQlhJSQ/maxresdefault.jpg"
             }
         ];
 
@@ -1112,22 +1258,25 @@
 
         function loadVideos() {
             isLoading = true;
-            document.getElementById('loading').style.display = 'flex';
+            const loadingElement = document.getElementById('loading');
+            if (loadingElement) {
+                loadingElement.style.display = 'flex';
+            }
             
-            // Simulate API loading
+            // Simulate API loading with shorter delay
             setTimeout(() => {
                 videos = [...mockVideos];
                 if (currentTopic !== 'all') {
                     videos = videos.filter(video => video.category === currentTopic);
                 }
                 
-                // Simulate more videos for infinite scroll
-                for (let i = 0; i < 10; i++) {
+                // Add more diverse videos for infinite scroll
+                for (let i = 0; i < 8; i++) {
                     const randomVideo = mockVideos[Math.floor(Math.random() * mockVideos.length)];
                     videos.push({
                         ...randomVideo,
-                        id: Date.now() + i,
-                        title: randomVideo.title + ` ${i + 1}`,
+                        id: Date.now() + i + Math.random(),
+                        title: randomVideo.title + ` #${i + 1}`,
                         views: Math.floor(Math.random() * 50000) + 1000,
                         likes: Math.floor(Math.random() * 5000) + 100
                     });
@@ -1135,8 +1284,10 @@
                 
                 displayCurrentVideo();
                 isLoading = false;
-                document.getElementById('loading').style.display = 'none';
-            }, 1000);
+                if (loadingElement) {
+                    loadingElement.style.display = 'none';
+                }
+            }, 500);
         }
 
         function displayCurrentVideo() {
@@ -1148,34 +1299,88 @@
             const videoContainer = document.getElementById('videoContainer');
             const loading = document.getElementById('loading');
             
-            videoContainer.innerHTML = `
-                <div class="video-card" id="currentVideoCard">
-                    <video 
-                        src="${video.url}" 
-                        autoplay 
-                        loop 
-                        muted 
-                        playsinline
-                        onloadeddata="updateVideoUI()"
-                    ></video>
-                    <div class="video-overlay">
-                        <div class="video-info">
-                            <div class="video-title">${video.title}</div>
-                            <div class="video-creator">
-                                <div class="creator-avatar">${video.avatar}</div>
-                                <span>@${video.creator}</span>
-                            </div>
-                        </div>
-                        <div class="video-stats">
-                            <span>👁️ ${formatNumber(video.views)}</span>
-                            <span>❤️ ${formatNumber(video.likes)}</span>
-                            <span>⏱️ ${video.duration}</span>
-                        </div>
+            // Clear previous content
+            videoContainer.innerHTML = '';
+            
+            // Create video card with loading state
+            const videoCard = document.createElement('div');
+            videoCard.className = 'video-card';
+            videoCard.id = 'currentVideoCard';
+            
+            // Create video element with better error handling
+            const videoElement = document.createElement('video');
+            videoElement.src = video.url;
+            videoElement.autoplay = true;
+            videoElement.loop = true;
+            videoElement.muted = true;
+            videoElement.playsInline = true;
+            videoElement.controls = false;
+            
+            // Add loading state
+            const videoLoading = document.createElement('div');
+            videoLoading.className = 'video-loading';
+            videoLoading.innerHTML = '<div class="spinner"></div><div>Loading video...</div>';
+            videoLoading.style.cssText = `
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                text-align: center;
+                color: #fff;
+                z-index: 10;
+            `;
+            
+            // Video event handlers
+            videoElement.addEventListener('loadstart', () => {
+                videoLoading.style.display = 'block';
+            });
+            
+            videoElement.addEventListener('canplay', () => {
+                videoLoading.style.display = 'none';
+                videoCard.classList.add('loaded');
+                updateVideoUI();
+            });
+            
+            videoElement.addEventListener('error', (e) => {
+                console.error('Video load error:', e);
+                videoLoading.innerHTML = '<div style="color: #ff6b6b;">❌ Video unavailable</div>';
+                // Try next video after 2 seconds
+                setTimeout(() => {
+                    nextVideo();
+                }, 2000);
+            });
+            
+            // Create overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'video-overlay';
+            overlay.innerHTML = `
+                <div class="video-info">
+                    <div class="video-title">${video.title}</div>
+                    <div class="video-creator">
+                        <div class="creator-avatar">${video.avatar}</div>
+                        <span>@${video.creator}</span>
                     </div>
+                </div>
+                <div class="video-stats">
+                    <span>👁️ ${formatNumber(video.views)}</span>
+                    <span>❤️ ${formatNumber(video.likes)}</span>
+                    <span>⏱️ ${video.duration}</span>
                 </div>
             `;
             
-            videoContainer.appendChild(loading);
+            // Assemble video card
+            videoCard.appendChild(videoElement);
+            videoCard.appendChild(videoLoading);
+            videoCard.appendChild(overlay);
+            
+            // Add to container
+            videoContainer.appendChild(videoCard);
+            
+            // Keep loading element for global loading states
+            if (loading) {
+                videoContainer.appendChild(loading);
+            }
+            
             updateSideControls();
         }
 
@@ -1206,13 +1411,39 @@
         }
 
         function nextVideo() {
-            currentVideoIndex = (currentVideoIndex + 1) % videos.length;
-            displayCurrentVideo();
+            if (isLoading) return;
+            
+            const videoCard = document.getElementById('currentVideoCard');
+            if (videoCard) {
+                videoCard.style.opacity = '0';
+                videoCard.style.transform = 'scale(0.95)';
+                
+                setTimeout(() => {
+                    currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+                    displayCurrentVideo();
+                }, 150);
+            } else {
+                currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+                displayCurrentVideo();
+            }
         }
 
         function previousVideo() {
-            currentVideoIndex = currentVideoIndex === 0 ? videos.length - 1 : currentVideoIndex - 1;
-            displayCurrentVideo();
+            if (isLoading) return;
+            
+            const videoCard = document.getElementById('currentVideoCard');
+            if (videoCard) {
+                videoCard.style.opacity = '0';
+                videoCard.style.transform = 'scale(0.95)';
+                
+                setTimeout(() => {
+                    currentVideoIndex = currentVideoIndex === 0 ? videos.length - 1 : currentVideoIndex - 1;
+                    displayCurrentVideo();
+                }, 150);
+            } else {
+                currentVideoIndex = currentVideoIndex === 0 ? videos.length - 1 : currentVideoIndex - 1;
+                displayCurrentVideo();
+            }
         }
 
         function likeVideo() {
@@ -1509,37 +1740,72 @@
         function setupSwipeHandlers() {
             const videoContainer = document.getElementById('videoContainer');
             
+            // Enhanced touch handlers
             videoContainer.addEventListener('touchstart', handleTouchStart, { passive: false });
             videoContainer.addEventListener('touchmove', handleTouchMove, { passive: false });
             videoContainer.addEventListener('touchend', handleTouchEnd, { passive: false });
             
-            // Mouse events for desktop
-            videoContainer.addEventListener('mousedown', handleMouseDown);
-            videoContainer.addEventListener('mousemove', handleMouseMove);
-            videoContainer.addEventListener('mouseup', handleMouseEnd);
-            videoContainer.addEventListener('mouseleave', handleMouseEnd);
+            // Enhanced mouse events for desktop
+            videoContainer.addEventListener('mousedown', handleMouseDown, { passive: false });
+            videoContainer.addEventListener('mousemove', handleMouseMove, { passive: false });
+            videoContainer.addEventListener('mouseup', handleMouseEnd, { passive: false });
+            videoContainer.addEventListener('mouseleave', handleMouseEnd, { passive: false });
+            
+            // Prevent default drag behavior
+            videoContainer.addEventListener('dragstart', (e) => e.preventDefault());
+            
+            // Add visual feedback for swipe states
+            videoContainer.style.userSelect = 'none';
+            videoContainer.style.webkitUserSelect = 'none';
         }
 
         function handleTouchStart(e) {
+            e.preventDefault();
             touchStartX = e.touches[0].clientX;
             touchStartY = e.touches[0].clientY;
             isSwipeActive = true;
+            
+            // Add visual feedback
+            const videoCard = document.getElementById('currentVideoCard');
+            if (videoCard) {
+                videoCard.style.transition = 'none';
+                videoCard.classList.add('dragging');
+            }
         }
 
         function handleTouchMove(e) {
             if (!isSwipeActive) return;
+            e.preventDefault();
             
             const deltaX = e.touches[0].clientX - touchStartX;
             const deltaY = e.touches[0].clientY - touchStartY;
+            
+            // Add visual feedback during drag
+            const videoCard = document.getElementById('currentVideoCard');
+            if (videoCard) {
+                const maxMove = 50;
+                const moveX = Math.max(-maxMove, Math.min(maxMove, deltaX * 0.3));
+                const moveY = Math.max(-maxMove, Math.min(maxMove, deltaY * 0.3));
+                videoCard.style.transform = `translate(${moveX}px, ${moveY}px) scale(${1 - Math.abs(moveX) * 0.005})`;
+            }
             
             updateSwipeIndicators(deltaX, deltaY);
         }
 
         function handleTouchEnd(e) {
             if (!isSwipeActive) return;
+            e.preventDefault();
             
             const deltaX = e.changedTouches[0].clientX - touchStartX;
             const deltaY = e.changedTouches[0].clientY - touchStartY;
+            
+            // Reset visual feedback
+            const videoCard = document.getElementById('currentVideoCard');
+            if (videoCard) {
+                videoCard.style.transition = 'transform 0.3s ease';
+                videoCard.style.transform = 'translate(0, 0) scale(1)';
+                videoCard.classList.remove('dragging');
+            }
             
             processSwipe(deltaX, deltaY);
             isSwipeActive = false;
@@ -1547,25 +1813,52 @@
         }
 
         function handleMouseDown(e) {
+            e.preventDefault();
             touchStartX = e.clientX;
             touchStartY = e.clientY;
             isSwipeActive = true;
+            
+            // Add visual feedback
+            const videoCard = document.getElementById('currentVideoCard');
+            if (videoCard) {
+                videoCard.style.transition = 'none';
+                videoCard.classList.add('dragging');
+            }
         }
 
         function handleMouseMove(e) {
             if (!isSwipeActive) return;
+            e.preventDefault();
             
             const deltaX = e.clientX - touchStartX;
             const deltaY = e.clientY - touchStartY;
+            
+            // Add visual feedback during drag
+            const videoCard = document.getElementById('currentVideoCard');
+            if (videoCard) {
+                const maxMove = 50;
+                const moveX = Math.max(-maxMove, Math.min(maxMove, deltaX * 0.3));
+                const moveY = Math.max(-maxMove, Math.min(maxMove, deltaY * 0.3));
+                videoCard.style.transform = `translate(${moveX}px, ${moveY}px) scale(${1 - Math.abs(moveX) * 0.005})`;
+            }
             
             updateSwipeIndicators(deltaX, deltaY);
         }
 
         function handleMouseEnd(e) {
             if (!isSwipeActive) return;
+            e.preventDefault();
             
             const deltaX = e.clientX - touchStartX;
             const deltaY = e.clientY - touchStartY;
+            
+            // Reset visual feedback
+            const videoCard = document.getElementById('currentVideoCard');
+            if (videoCard) {
+                videoCard.style.transition = 'transform 0.3s ease';
+                videoCard.style.transform = 'translate(0, 0) scale(1)';
+                videoCard.classList.remove('dragging');
+            }
             
             processSwipe(deltaX, deltaY);
             isSwipeActive = false;
@@ -1594,25 +1887,65 @@
         }
 
         function processSwipe(deltaX, deltaY) {
+            const minSwipeDistance = 30; // Lowered threshold for better responsiveness
+            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            
+            // Only process if minimum distance is met
+            if (distance < minSwipeDistance) return;
+            
             if (Math.abs(deltaX) > Math.abs(deltaY)) {
                 // Horizontal swipe
-                if (deltaX > swipeThreshold) {
+                if (deltaX > minSwipeDistance) {
                     // Swipe right - like
                     likeVideo();
-                } else if (deltaX < -swipeThreshold) {
+                    showSwipeAction('❤️ Liked!', '#ff6b6b');
+                } else if (deltaX < -minSwipeDistance) {
                     // Swipe left - next video
                     nextVideo();
+                    showSwipeAction('➡️ Next!', '#4ecdc4');
                 }
             } else {
                 // Vertical swipe
-                if (deltaY < -swipeThreshold) {
+                if (deltaY < -minSwipeDistance) {
                     // Swipe up - next video
                     nextVideo();
-                } else if (deltaY > swipeThreshold) {
+                    showSwipeAction('⬆️ Next!', '#4ecdc4');
+                } else if (deltaY > minSwipeDistance) {
                     // Swipe down - open channel
                     openChannel();
+                    showSwipeAction('📺 Channel!', '#ff9f43');
                 }
             }
+        }
+
+        function showSwipeAction(text, color) {
+            // Create temporary action feedback
+            const actionFeedback = document.createElement('div');
+            actionFeedback.innerHTML = text;
+            actionFeedback.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: ${color};
+                color: white;
+                padding: 15px 30px;
+                border-radius: 25px;
+                font-size: 18px;
+                font-weight: bold;
+                z-index: 9999;
+                animation: swipeActionFade 0.8s ease-out forwards;
+                pointer-events: none;
+            `;
+            
+            document.body.appendChild(actionFeedback);
+            
+            // Remove after animation
+            setTimeout(() => {
+                if (actionFeedback.parentNode) {
+                    actionFeedback.parentNode.removeChild(actionFeedback);
+                }
+            }, 800);
         }
 
         function hideSwipeIndicators() {
