@@ -4,11 +4,11 @@
 const FINS_CONFIG = {
     // OpenRouter API Configuration
     // Get your API key from: https://openrouter.ai/
-    openRouterApiKey: 'YOUR_OPENROUTER_API_KEY_HERE',
+    openRouterApiKey: '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
     
     // YouTube Data API Configuration
     // Get your API key from: https://console.cloud.google.com/
-    youtubeApiKey: 'YOUR_YOUTUBE_API_KEY_HERE',
+    youtubeApiKey: 'AIzaSyDoxfZH9LPbbjZucrqH1LDs0dKdIBc6cw0',
     
     // App Configuration
     app: {
